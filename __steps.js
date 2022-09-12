@@ -13,6 +13,6 @@
  * 5. listen to post
  * 6. node index.js
  * 7. check your browser for that port
- *
+ * 8. install nodemon and change script tag
  * -------------------------------
  */
