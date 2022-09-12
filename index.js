@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
 
+const cors = require("cors");
+app.use(cors());
+app.use(express.json());
+
 const port = process.env.port || 5000;
 
 const users = [
@@ -20,6 +24,25 @@ app.get("/user/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const user = users.find((user) => user.id === id);
   res.send(user);
+});
+
+app.post("/user", (req, res) => {
+  const user = req.body;
+  user.id = users.length + 1;
+  users.push(user);
+  res.send(user);
+});
+
+app.get("/user", (req, res) => {
+  if (req.query.name) {
+    const search = req.query.name.toLowerCase();
+    const matched = users.filter((user) =>
+      user.name.toLocaleLowerCase().includes(search)
+    );
+    res.send(matched);
+  } else {
+    res.send(users);
+  }
 });
 
 app.listen(port, () => {
